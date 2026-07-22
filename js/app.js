@@ -72,18 +72,19 @@ const TOMORROW_TEASE = {
   "편인": "촉이 서는 날입니다 — 검토·재확인은 내일 하면 하나를 더 잡아냅니다",
   "정인": "흡수의 날입니다 — 배우고 묻는 일은 내일 잘 들어옵니다",
 };
-/** 오늘 지지와 내 일지의 관계 → [이모지, 라벨, 해설] */
+/** 오늘 지지와 내 일지의 관계 → [이모지, 라벨, 해설]
+ *  용어를 카드 안에서 바로 풀어쓴다: 지지=그날의 땅 기운, 일지=내가 태어난 날의 땅 기운 */
 function jiRelation(myJi, tJi) {
   if (tJi === myJi)
-    return ["🪞", "같은 기운", `오늘 지지가 당신의 일지와 똑같은 <b>${myJi}</b> — 내 결이 두 배로 진해지는 날입니다. 평소의 장점도 습관도 크게 나오니, 좋은 버릇을 앞세우면 됩니다.`];
+    return ["🪞", "같은 기운", `오늘의 땅 기운(지지)이 당신이 태어난 날의 땅 기운(일지)과 똑같은 <b>${myJi}</b>입니다. 12일에 한 번, 내 결이 두 배로 진해지는 날 — 평소의 장점도 습관도 크게 나오니, 좋은 버릇을 앞세우면 됩니다.`];
   if (YUKHAP[myJi] === tJi)
-    return ["🤝", "합이 드는 날", `오늘 지지(${tJi})가 당신의 일지(${myJi})와 <b>육합</b> — 마음 맞는 사람이 나타나기 쉬운 날입니다. 약속·만남·부탁은 오늘 하세요.`];
+    return ["🤝", "합이 드는 날", `오늘의 땅 기운(지지 ${tJi})이 당신이 태어난 날의 땅 기운(일지 ${myJi})과 <b>육합</b> — 서로 끌어당겨 붙는 짝입니다. 마음 맞는 사람이 나타나기 쉬운 날이니, 약속·만남·부탁은 오늘 하세요.`];
   if (CHUNG[myJi] === tJi)
-    return ["🌀", "변화의 날", `오늘 지지(${tJi})가 당신의 일지(${myJi})와 <b>충</b> — 일정이 바뀌기 쉬운 날입니다. 나쁜 날이 아니라 '움직임의 날' — 여유 시간을 끼워 두면 오히려 전환의 기회가 됩니다.`];
+    return ["🌀", "변화의 날", `오늘의 땅 기운(지지 ${tJi})이 당신이 태어난 날의 땅 기운(일지 ${myJi})과 <b>충</b> — 정면으로 마주 보며 서로 흔드는 짝입니다. 일정이 바뀌기 쉬운 날인데, 나쁜 날이 아니라 '움직임의 날'입니다. 여유 시간을 끼워 두면 오히려 전환의 기회가 됩니다.`];
   const grp = SAMHAP.find((g) => g.includes(myJi) && g.includes(tJi));
   if (grp)
-    return ["🧩", "손발이 맞는 날", `오늘 지지(${tJi})가 당신의 일지(${myJi})와 <b>삼합</b> 짝 — 혼자보다 같이가 잘 풀리는 날입니다. 협업·모임·부탁하기 좋습니다.`];
-  return ["🍵", "담백한 날", `오늘 지지(${tJi})와 당신의 일지(${myJi})는 서로 담백한 사이 — 무리 없는 날입니다. 평소 페이스대로 가면 됩니다.`];
+    return ["🧩", "손발이 맞는 날", `오늘의 땅 기운(지지 ${tJi})이 당신이 태어난 날의 땅 기운(일지 ${myJi})과 <b>삼합</b> — 셋이 모여 한 팀을 이루는 짝입니다. 혼자보다 같이가 잘 풀리는 날 — 협업·모임·부탁하기 좋습니다.`];
+  return ["🍵", "담백한 날", `오늘의 땅 기운(지지 ${tJi})과 당신이 태어난 날의 땅 기운(일지 ${myJi})은 합도 충도 아닌 담백한 사이입니다. 무리 없는 날 — 평소 페이스대로 가면 됩니다.`];
 }
 /** 아침 문안 스트릭 (이 기기에만 저장) */
 function touchStreak() {
@@ -252,7 +253,7 @@ function renderToday() {
   if (dp === lastChart.day) {
     c.appendChild(el("div", "myday", `✨ 오늘은 <b>${dp}일</b> — 당신의 일주와 똑같은, <b>60일에 한 번 오는 '당신의 날'</b>입니다. 오늘 내린 결정은 유난히 '나답게' 남습니다.`));
   } else if (dp[0] === me) {
-    c.appendChild(el("div", "trow", `<span class="tico">🌗</span><span>오늘 천간이 당신의 일간과 같은 <b>${me}</b> — 열흘에 한 번, 내 색이 진해지는 날입니다.</span>`));
+    c.appendChild(el("div", "trow", `<span class="tico">🌗</span><span>오늘 하늘의 기운(천간)이 당신의 일간 — 사주에서 '나'를 뜻하는 글자 — 과 같은 <b>${me}</b>입니다. 열흘에 한 번 오는, 내 기질이 평소보다 진하게 나오는 날 — 장점을 앞세우면 유난히 '나답게' 풀립니다.</span>`));
   }
 
   // ④ 오늘 지지 × 내 일지 관계 (합·충·삼합)
@@ -261,12 +262,14 @@ function renderToday() {
 
   // ⑤ 골든아워 — 오늘 지지와 합이 드는 시진
   const gh = YUKHAP[dp[1]];
-  c.appendChild(el("div", "trow", `<span class="tico">⏰</span><span>오늘의 골든아워 — <b>${JI_HOURS[gh]}(${gh}시)</b>. 오늘 기운(${dp[1]})과 합이 드는 시간이라, 중요한 연락·결정은 이때가 부드럽습니다.</span>`));
+  c.appendChild(el("div", "trow", `<span class="tico">⏰</span><span>오늘의 골든아워 — <b>${JI_HOURS[gh]}(${gh}시)</b>. 오늘의 지지(${dp[1]})와 합이 드는 시간이라, 중요한 연락·결정은 이때가 부드럽습니다.</span>`));
 
-  // ⑥ 포인트 컬러
-  c.appendChild(el("div", "trow", `<span class="tico">🎨</span><span>오늘의 포인트 컬러 — <b>${OHAENG_COLOR[pointOh]}(${pointOh})</b>` +
-    `<span class="chip" style="background:${OHAENG_HEX[pointOh]}">${pointOh}</span>` +
-    (zero.length ? " · 명식에 드러나지 않은 기운을 곁에 두는 재미입니다." : "") + `</span>`));
+  // ⑥ 포인트 컬러 — 몸에 지니라는 뜻임을 문장으로
+  c.appendChild(el("div", "trow", `<span class="tico">🎨</span><span>오늘의 포인트 컬러 — <b>${OHAENG_COLOR[pointOh]}</b><span class="swatch" style="background:${OHAENG_HEX[pointOh]}"></span>` +
+    `옷·소품·펜 색 등 어디든 가볍게 곁에 두면 됩니다. ` +
+    (zero.length
+      ? `당신 명식에 드러나지 않은 <b>${pointOh}</b>의 기운을 색으로 빌려오는 재미입니다.`
+      : `오늘 일진의 기운(${pointOh})을 색으로 챙기는 재미입니다.`) + `</span>`));
 
   // ⑦ 절기 카운트다운
   try {
@@ -283,7 +286,7 @@ function renderToday() {
   const tm = new Date(now); tm.setDate(tm.getDate() + 1);
   const dp2 = dayPillar(tm.getFullYear(), tm.getMonth() + 1, tm.getDate());
   const gs2 = sipsin(me, dp2[0], true);
-  let tease = `🌙 <b>내일 예고</b> — 내일은 <b>${gs2}</b>, ${TOMORROW_TEASE[gs2]}.`;
+  let tease = `🌙 <b>내일의 기운</b> — 내일은 <b>${gs2}</b>, ${TOMORROW_TEASE[gs2]}.`;
   if (dp2 === lastChart.day) tease += " 게다가 <b>60일에 한 번 오는 '당신의 날'</b>입니다 — 놓치지 마세요.";
   else if (YUKHAP[myJi] === dp2[1]) tease += " 게다가 당신의 일지와 <b>합</b>이 드는 날 — 기대하셔도 좋습니다.";
   tease += " 내일 또 확인해 보세요.";
